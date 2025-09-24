@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+ code or django
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center text-white mt-4">Welcome to Django Project's</h1>
+
+<a class="btn btn-primary mb-4" href="{% url 'tweet_create' %}">Create a tweet</a> 
+
+<div class="container row gap-3">
+    {% for tweet in tweets %}
+      <div class="card" style="width: 18rem;">
+
+             {% if tweet.photo %}
+               <img src="{{ tweet.photo.url }}" class="card-img-top" alt="...">
+             {% else %}
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="No image">
+             {% endif %}
+             
+             <div class="card-body">
+             <h5 class="card-title">{{ tweet.user.username }}</h5>
+             <p class="card-text">{{ tweet.text }}</p>
+             <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+             
+
+             <form method="post" action="{% url 'tweet_delete' tweet.id %}" style="display:inline;">
+             {% csrf_token %}
+             <button type="submit" class="btn btn-danger">Delete</button>
+             </form>
+
+        </div>
+      </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
