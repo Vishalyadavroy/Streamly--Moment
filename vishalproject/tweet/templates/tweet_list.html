@@ -23,14 +23,15 @@
              <div class="card-body">
              <h5 class="card-title">{{ tweet.user.username }}</h5>
              <p class="card-text">{{ tweet.text }}</p>
+             {% if tweet.user == user %}
              <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
-             
-
+           
              <form method="post" action="{% url 'tweet_delete' tweet.id %}" style="display:inline;">
-             {% csrf_token %}
-             <button type="submit" class="btn btn-danger">Delete</button>
-             </form>
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Delete</button>
+              {% endif %}
 
+             
         </div>
       </div>
     {% endfor %}
